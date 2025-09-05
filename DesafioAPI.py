@@ -4,7 +4,7 @@ import requests
 def salvar_e_exibir(etapa, dados):
     print(f"\n--- {etapa} ---")
     print(dados)
-    with open("response.txt", "a", encoding="utf-8") as arquivo:
+    with open("EvidenciaResponseAPI.txt", "a", encoding="utf-8") as arquivo:
         arquivo.write(f"--- {etapa} ---\n")
         arquivo.write(str(dados) + "\n\n")
     print(f"✅ {etapa} registrado no arquivo.\n")

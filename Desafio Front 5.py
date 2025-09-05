@@ -10,7 +10,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from webdriver_manager.chrome import ChromeDriverManager
 
 # Pasta para guardar prints
-caminho_prints = r"C:\Users\Eduardo Santana\Desktop\Desafio Accenture"
+caminho_prints = r"C:\Eduardo Santana - Desafio Accenture\Evidencias Front"
 os.makedirs(caminho_prints, exist_ok=True)
 
 # Inicializa navegador
@@ -53,14 +53,14 @@ try:
     menu_interacoes = espera.until(EC.element_to_be_clickable((By.XPATH, "//h5[text()='Interactions']")))
     navegador.execute_script("arguments[0].scrollIntoView({block:'center'});", menu_interacoes)
     menu_interacoes.click()
-    print("Clicou em Interactions")
+    print("✅Clicou em Interactions")
     time.sleep(random.uniform(0.5, 1.2))
 
     # Selecionar submenu Sortable
     menu_sortable = espera.until(EC.element_to_be_clickable((By.XPATH, "//span[text()='Sortable']")))
     navegador.execute_script("arguments[0].scrollIntoView({block:'center'});", menu_sortable)
     menu_sortable.click()
-    print("Clicou em Sortable")
+    print("✅Clicou em Sortable")
     time.sleep(random.uniform(0.5, 1.2))
 
     # Centraliza e trava container da lista
@@ -70,7 +70,7 @@ try:
 
     # Captura lista inicial
     elementos, textos = pegar_itens()
-    print("Lista inicial:", textos)
+    print("✅Lista inicial:", textos)
 
     # Salvar print inicial
     caminho_inicial = os.path.join(caminho_prints, "Desfio_5_lista_inicial.png")
@@ -78,7 +78,7 @@ try:
 
     # Determinar ordem correta
     ordem_crescente = sorted(textos, key=lambda x: mapa_palavras[x])
-    print("Ordem desejada:", ordem_crescente)
+    print("✅Ordem desejada:", ordem_crescente)
 
     # Organizar lista
     for indice, valor in enumerate(ordem_crescente):
@@ -92,7 +92,7 @@ try:
 
     # Captura lista final
     _, textos_finais = pegar_itens()
-    print("Lista final:", textos_finais)
+    print("✅Lista final:", textos_finais)
 
     # Salvar print final
     caminho_final = os.path.join(caminho_prints, "Desafio_5_lista_ordenada.png")
@@ -101,7 +101,7 @@ try:
 
     # Validação final
     if textos_finais == ordem_crescente:
-        print("Lista organizada corretamente!")
+        print("✅Lista organizada corretamente!")
     else:
         print("A lista não está totalmente correta!")
 
