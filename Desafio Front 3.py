@@ -7,12 +7,11 @@ from webdriver_manager.chrome import ChromeDriverManager
 from faker import Faker
 import os
 import time
-import random
 
 fake = Faker()
 
 # Pasta para salvar prints
-caminho_prints = r"C:\Users\Eduardo Santana\Desktop\Desafio Accenture"
+caminho_prints = r"C:\Eduardo Santana - Desafio Accenture\Evidencias Front"
 os.makedirs(caminho_prints, exist_ok=True)
 
 # Inicializa navegador
@@ -22,40 +21,37 @@ navegador.get("https://demoqa.com")
 
 espera = WebDriverWait(navegador, 10)
 
-def clicar_humano(elemento, min_pause=0.3, max_pause=0.8):
-    """Clica no elemento simulando comportamento humano"""
+# Funções rápidas
+def clicar(elemento):
     elemento.click()
-    time.sleep(random.uniform(min_pause, max_pause))
+    time.sleep(0.01)
 
-def centralizar_travar(elemento):
-    """Mantém o elemento centralizado na tela"""
-    navegador.execute_script("arguments[0].scrollIntoView({behavior:'smooth', block:'center'});", elemento)
-    time.sleep(random.uniform(0.3, 0.7))
+def centralizar(elemento):
+    navegador.execute_script(
+        "arguments[0].scrollIntoView({behavior:'auto', block:'center'});", elemento
+    )
+    time.sleep(0.01)
 
-def digitar_humano(elemento, texto):
-    """Digita simulando velocidade humana"""
-    for char in texto:
-        elemento.send_keys(char)
-        time.sleep(random.uniform(0.05, 0.15))
+def digitar(elemento, texto):
+    elemento.send_keys(texto)
+    time.sleep(0.01)
 
 try:
     # Entrar em Elements
     btn_elements = espera.until(EC.element_to_be_clickable((By.XPATH, "//h5[text()='Elements']")))
-    centralizar_travar(btn_elements)
-    clicar_humano(btn_elements)
-    print("✅ Clicou em 'Elements'")
+    centralizar(btn_elements)
+    clicar(btn_elements)
 
     # Entrar em Web Tables
     btn_webtables = espera.until(EC.element_to_be_clickable((By.XPATH, "//span[text()='Web Tables']")))
-    centralizar_travar(btn_webtables)
-    clicar_humano(btn_webtables)
-    print("✅ Clicou em 'Web Tables'")
+    centralizar(btn_webtables)
+    clicar(btn_webtables)
 
     # Função para adicionar usuário
     def adicionar_usuario():
         add_btn = espera.until(EC.element_to_be_clickable((By.ID, "addNewRecordButton")))
-        centralizar_travar(add_btn)
-        clicar_humano(add_btn)
+        centralizar(add_btn)
+        clicar(add_btn)
 
         espera.until(EC.visibility_of_element_located((By.ID, "firstName")))
 
@@ -66,38 +62,38 @@ try:
         salary = str(fake.random_int(1000, 10000))
         department = fake.word()
 
-        digitar_humano(navegador.find_element(By.ID, "firstName"), first_name)
-        digitar_humano(navegador.find_element(By.ID, "lastName"), last_name)
-        digitar_humano(navegador.find_element(By.ID, "userEmail"), email)
-        digitar_humano(navegador.find_element(By.ID, "age"), age)
-        digitar_humano(navegador.find_element(By.ID, "salary"), salary)
-        digitar_humano(navegador.find_element(By.ID, "department"), department)
+        digitar(navegador.find_element(By.ID, "firstName"), first_name)
+        digitar(navegador.find_element(By.ID, "lastName"), last_name)
+        digitar(navegador.find_element(By.ID, "userEmail"), email)
+        digitar(navegador.find_element(By.ID, "age"), age)
+        digitar(navegador.find_element(By.ID, "salary"), salary)
+        digitar(navegador.find_element(By.ID, "department"), department)
 
         btn_submit = navegador.find_element(By.ID, "submit")
-        centralizar_travar(btn_submit)
-        clicar_humano(btn_submit)
+        centralizar(btn_submit)
+        clicar(btn_submit)
 
-        print(f"✅ Usuário adicionado: {first_name} {last_name}, salário: {salary}")
-
-        # Print de evidência
-        caminho_usuario = os.path.join(caminho_prints, f"user_added_{first_name}.png")
-        navegador.save_screenshot(caminho_usuario)
-        print(f"📸 Screenshot do usuário adicionado salva em: {caminho_usuario}")
-
-        return first_name, last_name, salary
+        return first_name, salary
 
     usuarios = []
 
-    # Adicionar 12 usuários
+    # 1 Adicionar 12 usuários
     for _ in range(12):
         usuarios.append(adicionar_usuario())
-        time.sleep(random.uniform(0.3, 0.7))
 
-    # Editar usuários
-    for first_name, last_name, salary in usuarios:
-        edit_btn = espera.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "span[title='Edit']")))
-        centralizar_travar(edit_btn)
-        clicar_humano(edit_btn)
+    # Print da tabela com 12 usuários
+    caminho_12_usuarios = os.path.join(caminho_prints, "Desafio_3_com_12_usuarios.png")
+    navegador.save_screenshot(caminho_12_usuarios)
+    print(f"📸 Screenshot da tabela com 12 usuários salva em: {caminho_12_usuarios}")
+
+    # 2 Editar os 12 usuários
+    for first_name, salary in usuarios:
+        edit_buttons = navegador.find_elements(By.CSS_SELECTOR, "span[title='Edit']")
+        if not edit_buttons:
+            break
+        btn_edit = edit_buttons[0]  # sempre pega o primeiro botão disponível
+        centralizar(btn_edit)
+        clicar(btn_edit)
 
         espera.until(EC.visibility_of_element_located((By.ID, "firstName")))
 
@@ -106,40 +102,28 @@ try:
 
         first_input = navegador.find_element(By.ID, "firstName")
         first_input.clear()
-        digitar_humano(first_input, new_first_name)
+        digitar(first_input, new_first_name)
 
         salary_input = navegador.find_element(By.ID, "salary")
         salary_input.clear()
-        digitar_humano(salary_input, new_salary)
+        digitar(salary_input, new_salary)
 
         btn_submit = navegador.find_element(By.ID, "submit")
-        centralizar_travar(btn_submit)
-        clicar_humano(btn_submit)
+        centralizar(btn_submit)
+        clicar(btn_submit)
 
-        print(f"✅ Usuário editado: {new_first_name}, salário: {new_salary}")
-
-        # Print de evidência
-        caminho_edit = os.path.join(caminho_prints, f"user_edited_{new_first_name}.png")
-        navegador.save_screenshot(caminho_edit)
-        print(f"📸 Screenshot do usuário editado salva em: {caminho_edit}")
-
-        time.sleep(random.uniform(0.3, 0.6))
-
-    # Deletar todos os usuários
+    # 3 Deletar todos os usuários
     while True:
         delete_buttons = navegador.find_elements(By.CSS_SELECTOR, "span[title='Delete']")
         if not delete_buttons:
             break
-        btn = delete_buttons[0]
-        centralizar_travar(btn)
-        clicar_humano(btn, 0.2, 0.5)
-        print("✅ Usuário deletado")
-        time.sleep(random.uniform(0.2, 0.5))
+        centralizar(delete_buttons[0])
+        clicar(delete_buttons[0])
 
-    # Screenshot final da tabela vazia
-    caminho_final = os.path.join(caminho_prints, "webtables_final.png")
+    # Print da tabela vazia
+    caminho_final = os.path.join(caminho_prints, "Desafio_3_Tabela_vazia.png")
     navegador.save_screenshot(caminho_final)
-    print(f"📸 Screenshot final salva em: {caminho_final}")
+    print(f"📸 Screenshot final (tabela vazia) salva em: {caminho_final}")
 
 finally:
     navegador.quit()

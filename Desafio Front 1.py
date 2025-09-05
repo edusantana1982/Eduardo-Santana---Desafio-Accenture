@@ -21,7 +21,7 @@ def clicar_humano(elemento, min_pause=0.3, max_pause=0.8):
     time.sleep(random.uniform(min_pause, max_pause))
 
 # ---------------- Configurações ----------------
-caminho_prints = r"C:\Users\Eduardo Santana\Desktop\Desafio Accenture"
+caminho_prints = r"C:\Eduardo Santana - Desafio Accenture\Evidencias Front"
 os.makedirs(caminho_prints, exist_ok=True)
 
 # ---------------- Inicialização do navegador ----------------
@@ -101,7 +101,7 @@ try:
 
     # --- Upload de arquivo ---
     upload_input = navegador.find_element(By.ID, "uploadPicture")
-    arquivo_caminho = os.path.join(caminho_prints, "Anexar ao desafio.txt")
+    arquivo_caminho = os.path.join(caminho_prints, "C:\Eduardo Santana - Desafio Accenture\Anexar ao desafio.txt")
     upload_input.send_keys(arquivo_caminho)
     print("✅ Arquivo anexado com sucesso!")
 

@@ -20,7 +20,7 @@ def clicar_humano(elemento, min_pause=0.3, max_pause=0.8):
     time.sleep(random.uniform(min_pause, max_pause))
 
 # Pasta para salvar prints
-caminho_prints = r"C:\Users\Eduardo Santana\Desktop\Desafio Accenture"
+caminho_prints = r"C:\Eduardo Santana - Desafio Accenture\Evidencias Front"
 os.makedirs(caminho_prints, exist_ok=True)
 
 # ---------------- Inicialização do navegador ----------------
@@ -57,7 +57,7 @@ try:
     print("✅ Botão 'New Window' clicado")
     time.sleep(2)
 
-    # --- Alternar para a nova janela aberta ---
+    # --- Alternando janela ---
     janelas = navegador.window_handles
     janela_principal = navegador.current_window_handle
     for janela in janelas:
@@ -66,7 +66,7 @@ try:
             time.sleep(1)
             break
 
-    # --- Validar a frase na nova janela ---
+    # --- Validar a frase ---
     try:
         corpo = navegador.find_element(By.TAG_NAME, "body")
         texto = corpo.text.strip()
@@ -79,7 +79,7 @@ try:
         print(f"⚠️ Não foi possível validar o texto: {e}")
 
     # --- Screenshot da nova janela ---
-    screenshot_nova = os.path.join(caminho_prints, "nova_janela.png")
+    screenshot_nova = os.path.join(caminho_prints, "Desafio_2_nova_janela.png")
     navegador.save_screenshot(screenshot_nova)
     print(f"📸 Screenshot da nova janela salva em: {screenshot_nova}")
 

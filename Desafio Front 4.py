@@ -8,7 +8,7 @@ import os
 import time
 
 # pasta para salvar screenshots
-screenshot_folder = r"C:\Users\Eduardo Santana\Desktop\Desafio Accenture"
+screenshot_folder = r"C:\Eduardo Santana - Desafio Accenture\Evidencias Front"
 
 # abrir navegador
 navegador = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -42,7 +42,7 @@ try:
         EC.element_to_be_clickable((By.ID, "startStopButton"))
     )
     start_button.click()
-    print("▶️ Clicou em 'Start'.")
+    print("✅ Clicou em 'Start'.")
 
     # --- parar abaixo de 25% ---
     while True:
@@ -53,25 +53,25 @@ try:
             print(f"⏸️ Stop acionado em {progress_text}.")
             
             # --- tirar screenshot no momento da pausa ---
-            desafio_4_path_pause = os.path.join(screenshot_folder, "desafio-4_pause.png")
+            desafio_4_path_pause = os.path.join(screenshot_folder, "desafio_4_pause.png")
             navegador.save_screenshot(desafio_4_path_pause)
             print(f"📸 Screenshot de pausa salva em: {desafio_4_path_pause}")
             break
         time.sleep(0.2)
 
     # --- esperar 5 segundos ---
-    print("⏳ Aguardando 5 segundos...")
+    print("✅ Aguardando 5 segundos...")
     time.sleep(5)
 
     # --- continuar até 100% ---
     start_again = navegador.find_element(By.ID, "startStopButton")
     start_again.click()
-    print("▶️ Start novamente, aguardando até 100%.")
+    print("✅ Start novamente, aguardando até 100%.")
 
     while True:
         progress_text = navegador.find_element(By.CSS_SELECTOR, ".progress-bar").text
         if progress_text == "100%":
-            print("🏁 Progresso chegou em 100%.")
+            print("✅ Progresso chegou em 100%.")
             break
         time.sleep(0.3)
 
@@ -83,7 +83,7 @@ try:
     # --- clicar em Reset ---
     reset_button = navegador.find_element(By.ID, "resetButton")
     reset_button.click()
-    print("🔄 Reset acionado.")
+    print("✅ Reset acionado.")
 
     time.sleep(2)
 
